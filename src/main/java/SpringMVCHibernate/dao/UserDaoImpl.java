@@ -19,10 +19,9 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     @Transactional
-    public void saveUser(String name, String lastName) {
-        User user = new User(name, lastName);
-        entityManager.persist(user);
-        System.out.println("Пользователь добавле");
+    public void saveUser(User user) {
+         entityManager.persist(user);
+        System.out.println("Пользователь добавлен");
 
 
     }
