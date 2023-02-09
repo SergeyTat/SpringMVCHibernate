@@ -2,6 +2,7 @@ package SpringMVCHibernate.config;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +20,12 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -49,46 +56,13 @@ public class AppConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
         emf.setPackagesToScan("SpringMVCHibernate");
-
         emf.setDataSource(getDataSource());
         emf.setJpaVendorAdapter(createJpaVendorAdapter());
         emf.setJpaProperties(createHibernateProperties());
-
         emf.afterPropertiesSet();
         System.out.println("Фабрика готова");
         return emf;
     }
-    @Bean
-    public JpaTransactionManager transactionManager() {
-        JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
-
-        return transactionManager;
-    }
-//    public TransactionManager transactionManager() {
-//        DataSourceTransactionManager transactionManager = new DataSourceTransactionManager();
-//        transactionManager.setDataSource(getDataSource());
-//        return transactionManager;
-//    }
-
-//    @Bean
-//    JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
-//        JpaTransactionManager transactionManager = new JpaTransactionManager();
-//        transactionManager.setEntityManagerFactory(entityManagerFactory);
-//        return transactionManager;
-//    }
-
-//    @Bean
-//    public PersistenceExceptionTranslationPostProcessor exceptionTranslation(){
-//        return new PersistenceExceptionTranslationPostProcessor();
-//    }
-
-
-//    @Bean(name = "entityManager")
-//    public EntityManager entityManager() {
-//        return entityManagerFactory().createEntityManager();
-//    }
-
 
     private JpaVendorAdapter createJpaVendorAdapter() {
         return new HibernateJpaVendorAdapter();
@@ -96,17 +70,28 @@ public class AppConfig {
 
     private Properties createHibernateProperties() {
         Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", "update");
-        properties.setProperty(
-                "hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+        properties.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
+        properties.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
+        properties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
         return properties;
     }
 
 
+    @Bean
+    public JpaTransactionManager transactionManager() {
+        JpaTransactionManager transactionManager = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
+        return transactionManager;
+    }
+
+
+///
+
+//
 
 //    @Bean
-//    public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
-//        return new JpaTransactionManager(emf);
+//    public PersistenceExceptionTranslationPostProcessor exceptionTranslation(){
+//        return new PersistenceExceptionTranslationPostProcessor();
 //    }
 
 
@@ -121,7 +106,7 @@ public class AppConfig {
 //
 //        factoryBean.setHibernateProperties(props);
 //        factoryBean.setAnnotatedClasses(User.class, Car.class);
-////        factoryBean.setAnnotatedClasses(Car.class);
+
 //        System.out.printf("Фабрика готова");
 //        return factoryBean;
 //    }

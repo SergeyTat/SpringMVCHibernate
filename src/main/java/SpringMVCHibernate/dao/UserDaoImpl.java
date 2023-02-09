@@ -7,10 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Repository
 @Transactional
-public class UserDaoImpl implements UserDao{
+public class UserDaoImpl implements UserDao {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -23,6 +24,15 @@ public class UserDaoImpl implements UserDao{
         entityManager.persist(user);
         System.out.println("Пользователь добавле");
 
+
+    }
+
+    @Override
+    @Transactional
+//    @SuppressWarnings("unchecked")
+    public List<User> listUsers() {
+        System.out.println("Лист пользователей получен");
+        return entityManager.createQuery("from User").getResultList();
 
     }
 
