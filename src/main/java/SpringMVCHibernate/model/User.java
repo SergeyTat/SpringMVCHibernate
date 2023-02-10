@@ -34,6 +34,14 @@ public class User {
         this.lastname = lastname;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public User(String name, String lastname) {
         this.name = name;
         this.lastname = lastname;

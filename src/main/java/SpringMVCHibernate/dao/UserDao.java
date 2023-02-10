@@ -7,4 +7,5 @@ import java.util.List;
 public interface UserDao {
     public void saveUser(User user);
     public List<User> listUsers();
+    public User findUser(int id);
 }

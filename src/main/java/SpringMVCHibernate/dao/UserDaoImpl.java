@@ -20,10 +20,8 @@ public class UserDaoImpl implements UserDao {
     @Override
     @Transactional
     public void saveUser(User user) {
-         entityManager.persist(user);
+        entityManager.persist(user);
         System.out.println("Пользователь добавлен");
-
-
     }
 
     @Override
@@ -32,7 +30,12 @@ public class UserDaoImpl implements UserDao {
     public List<User> listUsers() {
         System.out.println("Лист пользователей получен");
         return entityManager.createQuery("from User").getResultList();
+    }
 
+    @Override
+    @Transactional
+    public User findUser(int id) {
+        return entityManager.find(User.class, id);
     }
 
 

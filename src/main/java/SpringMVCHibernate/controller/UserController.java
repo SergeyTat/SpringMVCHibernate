@@ -5,10 +5,7 @@ import SpringMVCHibernate.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 
 @Controller
@@ -38,6 +35,19 @@ public class UserController {
         System.out.println("Пользователь сохранен");
         return "redirect:/";
     }
+    @GetMapping(value = "/{id}/edit")
+    public String editUser(Model model, @PathVariable("id") int id){
+        model.addAttribute("user",userDao.findUser(id));
+        return "edit";
+    }
+    @PatchMapping(value = "/{id}")
+    public String updateUser(@ModelAttribute ("user") User user,@PathVariable("id") int id){
+        userDao.saveUser(user);
+        System.out.println("Пользователь сохранен");
+        return "redirect:/";
+    }
+
+
 
 
 }
