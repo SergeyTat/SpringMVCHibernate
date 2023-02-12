@@ -6,10 +6,34 @@
     <title>Все пользователи</title>
 </head>
 <body>
-<div>
-    <th:block th:each="usr : ${user}">
-        <p th:text="${usr}"></p>
-    </th:block>
-</div>
+<br/>
+<br/>
+
+<a th:href="@{/new}">Создать новго Юзера</a>
+<br/>
+<hr/>
+
+<table>
+
+    <tbody>
+    <tr th:each="usr : ${user}">
+
+        <td th:text="${usr.getId()}"></td>
+        <td th:text="${usr.getName()}"></td>
+        <td th:text="${usr.getLastname()}"></td>
+        <td><a th:href="@{/{id}/edit (id=${usr.getId()})}" th:text="edit"></a></td>
+        <td><a th:href="@{/{id}/remove (id=${usr.getId()})}" th:text="remove"></a></td>
+
+
+    </tr>
+    </tbody>
+</table>
+
+
+<!--<div>-->
+<!--    <th:block th:each="usr : ${user}">-->
+<!--        <p th:text="${usr}"></p>-->
+<!--    </th:block>-->
+<!--</div>-->
 </body>
 </html>

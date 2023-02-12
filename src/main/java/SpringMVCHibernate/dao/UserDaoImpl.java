@@ -1,7 +1,6 @@
 package SpringMVCHibernate.dao;
 
 import SpringMVCHibernate.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,10 +37,19 @@ public class UserDaoImpl implements UserDao {
         return entityManager.find(User.class, id);
 
     }
+
     @Override
     @Transactional
     public User updateUser(User user) {
         return entityManager.merge(user);
+    }
+
+    @Override
+    @Transactional
+    public void removeUser(int id) {
+        User user = findUser(id);
+        entityManager.remove(user);
+
     }
 
 

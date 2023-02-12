@@ -40,14 +40,17 @@ public class UserController {
         model.addAttribute("user",userDao.findUser(id));
         return "edit";
     }
-    @PatchMapping(value = "/{id}")
-    public String updateUser(@ModelAttribute ("user") User user,@PathVariable("id") int id){
+    @PatchMapping(value = "/edit")
+    public String updateUser(@ModelAttribute ("user") User user){
         userDao.updateUser(user);
         System.out.println("Пользователь сохранен");
         return "redirect:/";
     }
+    @GetMapping(value = "/{id}/remove")
+    public String removeUser(@PathVariable("id") int id) {
+        userDao.removeUser(id);
+        System.out.println("Пользователь сохранен");
+        return "redirect:/";
 
-
-
-
+    }
 }
