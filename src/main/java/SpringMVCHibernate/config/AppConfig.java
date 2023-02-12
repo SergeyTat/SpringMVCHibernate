@@ -32,7 +32,6 @@ public class AppConfig {
         dataSource.setUrl(env.getProperty("db.url"));
         dataSource.setUsername(env.getProperty("db.username"));
         dataSource.setPassword(env.getProperty("db.password"));
-        System.out.println("Подключение готово");
         return dataSource;
     }
 
@@ -44,7 +43,6 @@ public class AppConfig {
         emf.setJpaVendorAdapter(createJpaVendorAdapter());
         emf.setJpaProperties(createHibernateProperties());
         emf.afterPropertiesSet();
-        System.out.println("Фабрика готова");
         return emf;
     }
 

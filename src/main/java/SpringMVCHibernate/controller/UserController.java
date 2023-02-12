@@ -32,7 +32,6 @@ public class UserController {
     @PostMapping(value = "create")
     public String createUser(@ModelAttribute ("user") User user){
         userDao.saveUser(user);
-        System.out.println("Пользователь сохранен");
         return "redirect:/";
     }
     @GetMapping(value = "/{id}/edit")
@@ -43,13 +42,11 @@ public class UserController {
     @PatchMapping(value = "/edit")
     public String updateUser(@ModelAttribute ("user") User user){
         userDao.updateUser(user);
-        System.out.println("Пользователь сохранен");
         return "redirect:/";
     }
     @GetMapping(value = "/{id}/remove")
     public String removeUser(@PathVariable("id") int id) {
         userDao.removeUser(id);
-        System.out.println("Пользователь сохранен");
         return "redirect:/";
 
     }
