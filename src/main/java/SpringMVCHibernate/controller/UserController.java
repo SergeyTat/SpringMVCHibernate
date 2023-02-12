@@ -42,7 +42,7 @@ public class UserController {
     }
     @PatchMapping(value = "/{id}")
     public String updateUser(@ModelAttribute ("user") User user,@PathVariable("id") int id){
-        userDao.saveUser(user);
+        userDao.updateUser(user);
         System.out.println("Пользователь сохранен");
         return "redirect:/";
     }

@@ -26,7 +26,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     @Transactional
-//    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     public List<User> listUsers() {
         System.out.println("Лист пользователей получен");
         return entityManager.createQuery("from User").getResultList();
@@ -36,6 +36,12 @@ public class UserDaoImpl implements UserDao {
     @Transactional
     public User findUser(int id) {
         return entityManager.find(User.class, id);
+
+    }
+    @Override
+    @Transactional
+    public User updateUser(User user) {
+        return entityManager.merge(user);
     }
 
 
