@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-@Transactional
+@Transactional(readOnly = true)
 public class UserDaoImpl implements UserDao {
 
     @PersistenceContext
@@ -24,7 +24,6 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    @Transactional
     @SuppressWarnings("unchecked")
     public List<User> listUsers() {
         System.out.println("Лист пользователей получен");
@@ -32,7 +31,6 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    @Transactional
     public User findUser(int id) {
         return entityManager.find(User.class, id);
 
