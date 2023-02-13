@@ -2,7 +2,6 @@ package SpringMVCHibernate.dao;
 
 import SpringMVCHibernate.model.User;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -41,9 +40,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void removeUser(int id) {
-//        User user = findUser(id);
         entityManager.createQuery("delete from User user where user.id=:id")
-                .setParameter("id",id)
+                .setParameter("id", id)
                 .executeUpdate();
 
 
